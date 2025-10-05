@@ -1,13 +1,17 @@
 package ua.model;
 
 public record Branch(String name, String location) {
+
     public Branch {
-        if (name == null || name.isBlank()) throw new IllegalArgumentException("Branch name required");
-        if (location == null || location.isBlank()) throw new IllegalArgumentException("Location required");
+        if (name == null || location == null) {
+            throw new IllegalArgumentException("Branch fields cannot be null");
+        }
     }
 
-    public static Branch of(String name, String location) {
-        return new Branch(name, location);
+    @Override
+    public String toString() {
+        return "Branch[name=%s, location=%s]".formatted(name, location);
     }
 }
+
 

@@ -1,21 +1,25 @@
 package ua.util;
 
+import ua.model.enums.CarStatus;
+import ua.model.enums.PaymentMethod;
+
 public class Utils {
-    public static void checkString(String s) {
-        if (!ValidationHelper.isStringValid(s)) {
-            throw new IllegalArgumentException("Invalid string: " + s);
-        }
+
+    public static String statusMessage(CarStatus status) {
+        return switch (status) {
+            case AVAILABLE -> "Car is available for rent.";
+            case RENTED -> "Car is currently rented.";
+            case MAINTENANCE -> "Car is under maintenance.";
+            case RESERVED -> "Car has been reserved.";
+        };
     }
 
-    public static void checkPositive(int n) {
-        if (!ValidationHelper.isPositive(n)) {
-            throw new IllegalArgumentException("Number must be positive: " + n);
-        }
-    }
-
-    public static void checkPositiveDouble(double n) {
-        if (!ValidationHelper.isPositiveDouble(n)) {
-            throw new IllegalArgumentException("Value must be > 0: " + n);
-        }
+    public static double applyDiscount(double amount, PaymentMethod method) {
+        return switch (method) {
+            case CREDIT_CARD -> amount * 0.95;
+            case DEBIT_CARD -> amount * 0.97;
+            case CASH -> amount;
+            case ONLINE -> amount * 0.9;
+        };
     }
 }
